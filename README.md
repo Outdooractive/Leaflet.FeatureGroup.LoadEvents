@@ -14,7 +14,8 @@ https://github.com/ebrelsford/Leaflet.loading that rely on `TileLayer`'s
 events `"loading"` and `"load"`, for example to display a "tile loading indicator".
 
 Such plugin do not work yet with `FeatureGroup`, because it does not
-have any events - especially in conjunction with a `Control` instance
+support the `"loading"` and `"load"` events. This is particularly an
+issue in conjunction with a `Control` instance
 ([issue](https://github.com/Leaflet/Leaflet/pull/4530#issuecomment-216559206)).
 
 The present plugin derives a new class `FeatureGroup.LoadEvents` that
@@ -32,5 +33,3 @@ One could patch `FeatureGroup` directly, but on the other hand:
 not-so-core-ish functionality,
 
  * and there are deeper [design issues](https://github.com/Leaflet/Leaflet/pull/4530#issuecomment-216519169).
-
-
