@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FeatureGroupLoadEvents example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="leaflet/v0.7.7/leaflet.css" />
+    <style type="text/css">
+      #map { position: fixed; top: 0; left: 0; width: 100%; height: 100%; margin: 0; padding: 0; }
+      #loading-indicator { display: none; }
+      .loading #loading-indicator { display: block; z-index: 9999; position: fixed; bottom: 1em; margin-left: 40%; 
+      }
+      #loading-indicator .loading-text { background-color: white; border: solid 1px black; padding: 0.1em 1em 0.1em 1em;
+      font-family: Verdana,Arial,'Lucida Grande',Sans-Serif
+      }
+    </style>
+  </head>
+  <body>
+    <p>Follow-up on <a href="https://github.com/Leaflet/Leaflet/pull/4530">https://github.com/Leaflet/Leaflet/pull/4530</a>.</p>
+
+    <div id="map"></div>
+    <div id="loading-indicator"><div class="loading-text">Loading...</div></div>
+    
+    <script type="text/javascript" src="leaflet/v0.7.7/leaflet.js"></script>
+    
+    <script type="text/javascript" src="FeatureGroup.LoadEvents.js"></script>
+
+    <script type="text/javascript">
+// create a map
+
+var div = document.createElement('div');
+div.setAttribute('style','position:fixed;margin:0;padding:0;left:0;top:0;width:100%;height:100%;');
+document.documentElement.appendChild(div);
+
+var map = L.map(div).setView([51.505, -0.09], 13);
+
+var tileLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+var group = L.FeatureGroup.loadEvents([ tileLayer ]);
+
+// test
+
+group.on({
+  loading : function () { console.log( 'The layer group just fired the "loading" event!' ); document.body.className="loading"; }
+  , load  : function () { console.log( 'The layer group just fired the "load" event!' ); document.body.className=""; }
+});
+
+group.addTo(map);
+    </script>
+
+  </body>
+</html>
