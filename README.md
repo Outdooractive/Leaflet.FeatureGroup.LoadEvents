@@ -19,6 +19,34 @@ Some possible uses:
 
 Note: If none of the sublayer fires `"loading"` and `"load"`, then `FeatureGroup.LoadEvents` won't fire those events either.
 
+## Example
+
+```js
+var map = L.map(div).setView([51.505, -0.09], 13);
+var tileLayer_1 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+var tileLayer_2 = L.tileLayer(...);
+var tileLayer_3 = L.tileLayer(...);
+var group = L.FeatureGroup.loadEvents([ tileLayer_1, tilelayer_2, tilelayer_3 ]);
+// test
+group.on({
+  loading : function () { 
+    console.log( 'The layer group just fired the "loading" event!' ); 
+    document.body.className="loading"; 
+  }
+  , load  : function () { 
+    console.log( 'The layer group just fired the "load" event!' ); 
+    document.body.className=""; 
+  }
+});
+group.addTo(map);
+```
+
+See also a [complete HTML example](index.html).
+
+
 ## Live Example
 
 http://outdooractive.github.io/Leaflet.FeatureGroup.LoadEvents/
